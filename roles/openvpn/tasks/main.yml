@@ -1,0 +1,19 @@
+---
+- name: disable service restarts while updating
+  raw: echo "101" > /usr/sbin/policy-rc.d
+  become: true
+  become_method: sudo
+- name: install python 2 and aptitude on all Ubuntu servers
+  raw: test -e /usr/bin/python || (apt -y update && apt install -y aptitude python-all python-apt)
+  become: true
+  become_method: sudo
+- name: Runs an apt update & apt upgrade to get the machine updated
+  apt:
+    upgrade: full
+    force: yes
+    dpkg_options: force-confold
+    update_cache: yes
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+  become: true
+  become_method: sudo
