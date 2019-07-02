@@ -2,4 +2,4 @@
 
 ## To Run/Deploy
 
-> ansible-playbook -i localhost:2222, -u ubuntu -bkK openvpn.yml
+> ansible-playbook -i {hostname:{port},} -u ubuntu -bkK openvpn.yml
