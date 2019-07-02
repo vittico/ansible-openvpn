@@ -4,7 +4,7 @@
   become: true
   become_method: sudo
 - name: install python 2 and aptitude on all Ubuntu servers
-  raw: test -e /usr/bin/python || (apt -y update && apt install -y aptitude python-all python-apt)
+  raw: test -e /usr/bin/python || (apt -y update && apt install -y aptitude python3-all python3-apt)
   become: true
   become_method: sudo
 - name: Runs an apt update & apt upgrade to get the machine updated
@@ -15,5 +15,31 @@
     update_cache: yes
   environment:
     DEBIAN_FRONTEND: noninteractive
+  become: true
+  become_method: sudo
+- name: Installs OpenVPN
+  apt: 
+    name: openvpn
+  become: true
+  become_method: sudo
+- name: Installs iptable-persistent
+  apt: 
+    name: iptables-persistent
+  become: true
+  become_method: sudo
+- name: Download EasyRSA
+  get_url:
+    url: https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.6/EasyRSA-unix-v3.0.6.tgz
+    dest: /tmp/easyrsa.tgz
+    mode: '0440'
+  become: true
+  become_method: sudo
+- name: Extract foo.tgz into /var/lib/foo
+  unarchive:
+    src: /tmp/easyrsa.tgz
+    dest: /etc/openvpn
+    remote_src: yes
+- name: Rename EasyRSA directory to something more convenient
+  raw: mv /etc/openvpn/EasyRSA-v3.0.6 /etc/openvpn/easyrsa
   become: true
   become_method: sudo
