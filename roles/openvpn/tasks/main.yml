@@ -34,7 +34,7 @@
     mode: '0440'
   become: true
   become_method: sudo
-- name: Extract foo.tgz into /var/lib/foo
+- name: Extract EasyRSA-unix-v3.0.6.tgz to /etc/openvpn
   unarchive:
     src: /tmp/easyrsa.tgz
     dest: /etc/openvpn
