@@ -15,7 +15,3 @@ steps:
     - cp BUILDINFO etale-java-signature-server/src/main/resources
     - cp BUILDINFO etale-java-connectors/src/main/resources
     - mkdir -p /drone/gradle-home-${DRONE_BRANCH}
-
-
-
-
