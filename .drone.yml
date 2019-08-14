@@ -1,0 +1,17 @@
+kind: pipeline
+name: default
+
+steps:
+- name: create-buildinfo-step
+  image: node:alpine
+  pull: true
+  commands:
+    - echo $DRONE_COMMIT_BRANCH >> BUILDINFO && echo $DRONE_COMMIT_SHA >> BUILDINFO
+    - echo $DRONE_BUILD_NUMBER >> BUILDINFO && echo $DRONE_COMMIT_LINK >> BUILDINFO
+    - cp BUILDINFO etale-java-aggregator/src/main/resources
+    - cp BUILDINFO etale-java-feedhandler/src/main/resources
+    - cp BUILDINFO etale-java-order-routing/src/main/resources
+    - cp BUILDINFO etale-java-user-management/src/main/resources
+    - cp BUILDINFO etale-java-signature-server/src/main/resources
+    - cp BUILDINFO etale-java-connectors/src/main/resources
+    - mkdir -p /drone/gradle-home-${DRONE_BRANCH}
